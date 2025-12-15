@@ -1,0 +1,360 @@
+:root {
+    --bg-dark: #0f1115;
+    --sidebar-bg: #161b22;
+    --card-bg: #1c2128;
+    --text-main: #ffffff;
+    --text-muted: #8b949e;
+    --accent: #238636; /* GitHub Green stil */
+    --accent-hover: #2ea043;
+    --border: #30363d;
+    --glass: rgba(22, 27, 34, 0.7);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden; /* App-känsla */
+}
+
+/* --- Layout --- */
+.app-container {
+    display: flex;
+    height: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.brand {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-main);
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.sidebar nav a:hover, .sidebar nav a.active {
+    background-color: rgba(255,255,255,0.05);
+    color: var(--text-main);
+}
+
+.user-profile {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(45deg, #7928ca, #ff0080);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Scroll bara här */
+}
+
+.top-bar {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 17, 21, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border);
+}
+
+.search-bar {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 8px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 300px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    outline: none;
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+.content-area {
+    padding: 40px;
+}
+
+.page-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+/* --- GRID & CARDS --- */
+.modern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-color: #555;
+}
+
+.card-img-container {
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* En snygg overlay på bilden vid hover */
+.card-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.card:hover .card-overlay { opacity: 1; }
+
+.card-body {
+    padding: 16px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.card-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- MODAL (POPUP) --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.hidden { display: none; }
+
+.modal {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.form-group { margin-bottom: 15px; }
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: white;
+}
+
+.form-group input:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+.full-width { width: 100%; justify-content: center; margin-top: 10px; }
+
+/* --- Behåll allt från förra steget, men uppdatera/lägg till detta: --- */
+
+:root {
+    --bg-dark: #0f1115;
+    --sidebar-bg: #161b22;
+    --card-bg: #1c2128;
+    --text-main: #ffffff;
+    --text-muted: #8b949e;
+    --accent: #238636;
+    --danger: #da3633; /* Röd färg för radera */
+    --border: #30363d;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg-dark); color: var(--text-main); margin: 0; height: 100vh; overflow: hidden; }
+
+/* Layout & Sidebar (Samma som förut) */
+.app-container { display: flex; height: 100%; }
+.sidebar { width: 250px; background: var(--sidebar-bg); padding: 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border); }
+.brand { font-size: 20px; font-weight: bold; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
+.nav-link { display: flex; gap: 10px; padding: 10px; color: var(--text-muted); text-decoration: none; margin-bottom: 5px; border-radius: 6px; transition: 0.2s; }
+.nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.05); color: white; }
+.user-profile { margin-top: auto; display: flex; gap: 10px; padding-top: 20px; border-top: 1px solid var(--border); }
+.avatar { width: 36px; height: 36px; background: purple; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.user-info { display: flex; flex-direction: column; font-size: 12px; }
+.user-info .name { font-weight: bold; }
+
+/* Main Content */
+.main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg-dark); }
+.top-bar { padding: 15px 30px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(22,27,34,0.8); backdrop-filter: blur(10px); }
+.content-area { padding: 30px; overflow-y: auto; flex: 1; }
+
+/* Grid & Cards */
+.modern-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); overflow: hidden; position: relative; transition: transform 0.2s; }
+.card:hover { transform: translateY(-3px); border-color: #666; }
+.card-img { width: 100%; height: 180px; object-fit: cover; }
+.card-body { padding: 15px; }
+.card h3 { font-size: 16px; margin: 0 0 5px 0; }
+.card p { font-size: 13px; color: var(--text-muted); }
+
+/* Card Actions (Knappar på kortet) */
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.action-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+}
+.action-btn:hover { color: white; }
+.action-btn.liked { color: #f91880; } /* Rosa hjärta */
+.action-btn.delete:hover { color: var(--danger); }
+
+/* Settings Form */
+.settings-card { background: var(--card-bg); padding: 30px; border-radius: 8px; border: 1px solid var(--border); max-width: 600px; }
+.form-row { display: flex; gap: 20px; }
+.form-group { margin-bottom: 15px; width: 100%; }
+.form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--text-muted); }
+.form-group input { width: 100%; padding: 10px; background: #0d1117; border: 1px solid var(--border); color: white; border-radius: 4px; box-sizing: border-box;}
+
+/* Helper Classes */
+.hidden { display: none !important; }
+.btn-primary { background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; display: flex; gap: 5px; align-items: center; }
+/* Modal styles (samma som förut) */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; justify-content: center; align-items: center; z-index: 100; }
+.modal { background: var(--card-bg); padding: 25px; border-radius: 8px; width: 400px; border: 1px solid var(--border); }
+.close-btn { background: none; border: none; color: white; font-size: 20px; cursor: pointer; float: right; }
+.full-width { width: 100%; justify-content: center; margin-top: 10px; }
